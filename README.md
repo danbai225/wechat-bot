@@ -27,3 +27,29 @@ services:
       - PROXY_USER=user
       - PROXY_PASS=pass
 ```
+
+# use
+
+```go
+package main
+
+import (
+	logs "github.com/danbai225/go-logs"
+	wechatbot "github.com/danbai225/wechat-bot"
+)
+
+func main() {
+	client, err := wechatbot.NewClient("ws://serverIP:5555", "http://serverIP:5556")
+	if err != nil {
+		logs.Err(err)
+		return
+	}
+	client.SetOnWXmsg(func(msg []byte, Type int, reply *wechatbot.Reply) {
+		if Type == 1 {
+			logs.Info(string(msg))
+		}
+	})
+	select {}
+}
+
+```
