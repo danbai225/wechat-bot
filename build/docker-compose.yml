@@ -1,0 +1,21 @@
+version: "2.4"
+services:
+  wechat-bot:
+    image: danbai225/wechat-bot:latest
+    container_name: wechat-bot
+    restart: always
+    ports:
+      - "8080:8080"
+      - "5555:5555"
+      - "5556:5556"
+      - "5900:5900"
+    extra_hosts:
+      - "dldir1.qq.com:127.0.0.1"
+    volumes:
+      - "./data:/home/app/data"
+      - "./wxFiles:/home/app/WeChat Files"
+    environment:
+      #- PROXY_IP=1.14.75.115 #如果设置则使用代理
+      - PROXY_PORT=7777
+      - PROXY_USER=user
+      - PROXY_PASS=pass

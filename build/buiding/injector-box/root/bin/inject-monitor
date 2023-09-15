@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+INJMON_LOG_FILE=${INJMON_LOG_FILE:-/dev/stdout}
+function monitor() {
+    while :
+    do
+        if [ "$INJ_CONDITION" != "" ]; then
+            bash -c "$INJ_CONDITION"
+            if [ "$?" = "0" ]; then
+                echo $(date '+%y-%m-%d %H:%M:%S')  "funtool is running."
+                sleep 10
+                continue
+            fi
+            echo "funtool isn't running. starting..."
+        fi
+        inject-dll
+        sleep 10
+        names=$(xdotool search '【funtool】')
+        xdotool key Tab
+        sleep 0.5
+        xdotool key Return 
+        sleep 0.5
+        for val in "${names[@]}"
+        do
+            xdotool windowunmap $val
+        done
+        wxWid=$(xdotool search '微信')
+        xdotool windowmove $wxWid 0 0
+        sleep 0.5
+        xdotool mousemove 140 300
+        xdotool click 1
+        /home/app/proxy.sh
+        sleep 0.5
+        xdotool mousemove 135 333
+        xdotool click 1
+    done
+}
+monitor

@@ -42,8 +42,7 @@ func NewClient(ws, qrHttp string) (*Client, error) {
 		Client: c,
 	}
 	socket, _, err := gws.NewClient(&c.handler, &gws.ClientOption{
-		Addr:        ws,
-		DialTimeout: time.Second * 5,
+		Addr: ws,
 	})
 	if err != nil {
 		return nil, err
@@ -84,8 +83,7 @@ func (c *Client) ShutDown() error {
 // RCon 重连
 func (c *Client) RCon() error {
 	socket, _, err := gws.NewClient(&c.handler, &gws.ClientOption{
-		Addr:        c.addr,
-		DialTimeout: time.Second * 5,
+		Addr: c.addr,
 	})
 	if err != nil {
 		return err
@@ -93,7 +91,7 @@ func (c *Client) RCon() error {
 	c.socket = socket
 	c.lastTime = time.Now().Unix()
 	fmt.Println(time.Now().Format("2006-01-02 15:04:05"), "重连成功")
-	go socket.Listen()
+	go socket.ReadLoop()
 	return err
 }
 func (c *Client) healthExamination() {
@@ -300,8 +298,8 @@ func (c *handler) OnError(socket *gws.Conn, err error) {
 	fmt.Println(time.Now().Format("2006-01-02 15:04:05"), "OnError", err, socket.RemoteAddr().String())
 	c.Client.socket = nil
 }
-func (c *handler) OnClose(socket *gws.Conn, code uint16, reason []byte) {
-	fmt.Println(time.Now().Format("2006-01-02 15:04:05"), "close", code, string(reason))
+func (c *handler) OnClose(socket *gws.Conn, err error) {
+	fmt.Println(time.Now().Format("2006-01-02 15:04:05"), "close")
 	c.Client.socket = nil
 }
 
