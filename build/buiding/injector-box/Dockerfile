@@ -10,6 +10,8 @@ RUN sudo chown -R app:app /drive_c && cp -r /drive_c/* /home/app/.wine/drive_c/
 RUN sudo rm -rf /WeChatSetup*
 RUN mkdir /home/app/data
 RUN sudo ln -s /home/app/data /home/app/.wine/dosdevices/c:/data
+ADD v.py /home/app/
+RUN wine pip.exe install pymem
 ENV HOOK_PROC_NAME=WeChat
 ENV TARGET_AUTO_RESTART=yes
 ENV TARGET_CMD=wechat-start
