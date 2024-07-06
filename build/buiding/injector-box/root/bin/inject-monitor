@@ -32,6 +32,8 @@ function monitor() {
         sleep 0.5
         xdotool mousemove 135 333
         xdotool click 1
+        sleep 5
+        wine python.exe /home/app/v.py
     done
 }
 monitor

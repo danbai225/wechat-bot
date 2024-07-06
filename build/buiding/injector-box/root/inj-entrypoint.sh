@@ -15,14 +15,9 @@ function run-target() {
 function run-qrServer() {
     nohup /home/app/qr-server >/dev/null 2>&1 &
 }
-function run-versionChange() {
-    wine python.exe /home/app/v.py
-}
 /entrypoint.sh &
 sleep 5
 inject-monitor &
 run-target &
 run-qrServer &
-sleep 5
-run-versionChange &
 wait
