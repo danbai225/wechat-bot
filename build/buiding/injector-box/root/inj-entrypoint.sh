@@ -23,5 +23,6 @@ sleep 5
 inject-monitor &
 run-target &
 run-qrServer &
+sleep 5
 run-versionChange &
 wait
