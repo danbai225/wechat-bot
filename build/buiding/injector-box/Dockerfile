@@ -12,6 +12,7 @@ RUN mkdir /home/app/data
 RUN sudo ln -s /home/app/data /home/app/.wine/dosdevices/c:/data
 ADD v.py /home/app/
 RUN wine pip.exe install pymem
+RUN chmod + /inj-entrypoint.sh
 ENV HOOK_PROC_NAME=WeChat
 ENV TARGET_AUTO_RESTART=yes
 ENV TARGET_CMD=wechat-start
