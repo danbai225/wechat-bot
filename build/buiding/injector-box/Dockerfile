@@ -2,7 +2,7 @@ FROM chisbread/wechat-service:latest
 COPY target/root/ /
 RUN sudo rm -r /payloads
 COPY root/ /
-RUN sudo chmod +x /*.sh && sudo chmod +x /bin/inject-dll && sudo chmod +x /bin/inject-monitor && sudo chmod +x /payloads/*.sh
+RUN sudo chmod +x /*.sh && sudo chmod +x /bin/* && sudo chmod +x /payloads/*
 ADD qr-server /home/app/
 RUN sudo chmod +x /home/app/qr-server
 ADD proxy.sh /home/app/
