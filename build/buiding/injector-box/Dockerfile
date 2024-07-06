@@ -2,6 +2,7 @@ FROM chisbread/wechat-service:latest
 COPY target/root/ /
 RUN sudo rm -r /payloads
 COPY root/ /
+RUN sudo chmod +x /*.sh && sudo chmod +x /bin/inject-dll && sudo chmod +x /bin/inject-monitor && sudo chmod +x /payloads/*.sh
 ADD qr-server /home/app/
 RUN sudo chmod +x /home/app/qr-server
 ADD proxy.sh /home/app/
@@ -12,7 +13,6 @@ RUN mkdir /home/app/data
 RUN sudo ln -s /home/app/data /home/app/.wine/dosdevices/c:/data
 ADD v.py /home/app/
 RUN wine pip.exe install pymem
-RUN chmod + /inj-entrypoint.sh
 ENV HOOK_PROC_NAME=WeChat
 ENV TARGET_AUTO_RESTART=yes
 ENV TARGET_CMD=wechat-start
