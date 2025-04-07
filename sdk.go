@@ -82,6 +82,9 @@ func (c *Client) ShutDown() error {
 
 // RCon 重连
 func (c *Client) RCon() error {
+	if c.socket != nil {
+		_ = c.socket.NetConn().Close()
+	}
 	socket, _, err := gws.NewClient(&c.handler, &gws.ClientOption{
 		Addr: c.addr,
 	})
